@@ -1,6 +1,7 @@
-# 🚀 VendorBridge AI
 
 <div align="center">
+
+# 🚀 VendorBridge AI
 
 ## Smart Procurement & Vendor Management ERP
 
