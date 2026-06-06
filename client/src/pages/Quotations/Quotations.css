@@ -1,0 +1,313 @@
+/* ═══════════════════════════════════════════════════════════════
+   QUOTATIONS + COMPARE — Complete styles
+═══════════════════════════════════════════════════════════════ */
+
+.quotations-page { display: flex; flex-direction: column; gap: 20px; }
+
+/* Grouped RFQ cards */
+.rfq-group-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.rfq-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.rfq-number-badge {
+  display: inline-flex;
+  padding: 2px 8px;
+  background: var(--primary-light);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #818cf8;
+  white-space: nowrap;
+}
+[data-theme="light"] .rfq-number-badge { color: var(--primary); }
+
+/* Submit modal totals */
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-top: 8px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+.total-amount { color: var(--accent); font-size: var(--text-lg); font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════════════
+   QUOTATION COMPARE PAGE
+═══════════════════════════════════════════════════════════════ */
+.qcompare-page { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── AI Recommendation Banner ───────────────────────────────── */
+.ai-recommendation-banner {
+  position: relative;
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  overflow: hidden;
+}
+
+.rec-glow {
+  position: absolute;
+  top: -40px; left: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(99,102,241,0.2), transparent 70%);
+  pointer-events: none;
+}
+
+.rec-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.rec-trophy { font-size: 2rem; flex-shrink: 0; }
+
+.rec-main { flex: 1; min-width: 0; }
+
+.rec-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #818cf8;
+  margin-bottom: 4px;
+}
+
+.rec-vendor-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.rec-reasons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rec-reason {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #10b981;
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.2);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.rec-score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.rec-score {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #6366f1;
+  line-height: 1;
+}
+
+.rec-score-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.rec-score-breakdown {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+.rec-score-breakdown span {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Sort Buttons ────────────────────────────────────────────── */
+.sort-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+.sort-btn:hover  { border-color: var(--primary); color: var(--text-primary); }
+.sort-btn.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 600; }
+
+/* ── Compare Grid ────────────────────────────────────────────── */
+.qcompare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* ── Quotation Card ──────────────────────────────────────────── */
+.quotation-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all var(--duration) var(--ease);
+}
+.quotation-card:hover { border-color: rgba(99,102,241,0.3); box-shadow: var(--shadow-md); }
+.quotation-card.recommended {
+  border-color: rgba(99,102,241,0.45);
+  background: linear-gradient(135deg, var(--card), rgba(99,102,241,0.04));
+  box-shadow: 0 0 0 1px rgba(99,102,241,0.25), var(--shadow-md);
+}
+
+.recommended-ribbon {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+
+/* ── Card Header ─────────────────────────────────────────────── */
+.qcard-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qcard-avatar {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; color: white;
+}
+
+.qcard-vendor {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.ai-score-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+}
+.ai-score-badge span { font-size: 0.65rem; color: var(--text-muted); font-weight: 400; }
+.ai-score-badge.recommended { color: var(--primary); border-color: rgba(99,102,241,0.3); background: var(--primary-light); }
+
+/* ── Highlights ──────────────────────────────────────────────── */
+.qcard-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.qcard-highlight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  transition: all var(--duration) var(--ease);
+}
+.qcard-highlight.best {
+  background: rgba(16,185,129,0.08);
+  border-color: rgba(16,185,129,0.25);
+}
+.qcard-highlight.best svg { color: #10b981; }
+
+.highlight-val   { display: block; font-size: var(--text-sm); font-weight: 700; color: var(--text-primary); }
+.highlight-label { display: block; font-size: 0.65rem; color: var(--text-muted); margin-top: 1px; }
+
+/* ── Score Bars ──────────────────────────────────────────────── */
+.qcard-scores { display: flex; flex-direction: column; gap: 6px; }
+
+.score-bar-row { display: flex; align-items: center; gap: 8px; }
+.score-bar-label { font-size: var(--text-xs); color: var(--text-muted); width: 60px; flex-shrink: 0; }
+.score-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: var(--surface-3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.score-bar-fill { height: 100%; border-radius: var(--radius-full); transition: width 0.6s var(--ease-out); }
+.score-bar-val { font-size: 0.68rem; font-weight: 600; color: var(--text-secondary); width: 28px; text-align: right; }
+
+/* ── Items ───────────────────────────────────────────────────── */
+.qcard-items { display: flex; flex-direction: column; gap: 4px; }
+
+.qcard-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.qcard-notes {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 6px 8px;
+  background: var(--surface-2);
+  border-left: 2px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 0;
+}
+
+/* ── Best cell in comparison table ──────────────────────────── */
+.best-cell { color: #10b981 !important; font-weight: 700; }

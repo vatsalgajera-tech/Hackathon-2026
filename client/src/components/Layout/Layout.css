@@ -1,0 +1,166 @@
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT — theme-aware app shell
+═══════════════════════════════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  transition: background var(--duration-slow) var(--ease);
+}
+
+.layout-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.layout-header {
+  height: var(--header-height);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex-shrink: 0;
+  transition: background var(--duration-slow) var(--ease),
+              border-color var(--duration-slow) var(--ease);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-title {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* ── Search ──────────────────────────────────────────────────── */
+.header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-icon {
+  position: absolute;
+  left: 10px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.search-input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  padding: 0 14px 0 32px;
+  height: 34px;
+  font-size: var(--text-sm);
+  width: 200px;
+  outline: none;
+  transition: all var(--duration) var(--ease);
+  font-family: inherit;
+}
+.search-input:focus {
+  width: 240px;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-ring);
+  background: var(--surface-3);
+}
+.search-input::placeholder { color: var(--text-disabled); }
+
+/* ── Theme Toggle ─────────────────────────────────────────────── */
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  transition: all var(--duration) var(--ease);
+}
+.theme-toggle-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 300ms var(--ease-spring);
+}
+.theme-toggle:hover .theme-toggle-inner { transform: rotate(22deg) scale(1.2); }
+.theme-icon.sun  { color: #f59e0b; filter: drop-shadow(0 0 6px rgba(245,158,11,0.6)); }
+.theme-icon.moon { color: #818cf8; filter: drop-shadow(0 0 6px rgba(129,140,248,0.6)); }
+
+/* ── User Info ───────────────────────────────────────────────── */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: all var(--duration) var(--ease);
+}
+.header-user:hover { background: var(--surface-2); border-color: var(--border); }
+.header-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: white;
+  flex-shrink: 0;
+}
+.header-user-name {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.header-user-role {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+/* ── Main Content ────────────────────────────────────────────── */
+.layout-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .layout-content   { padding: 16px; }
+  .header-search    { display: none; }
+  .header-user-info { display: none; }
+}
+
+@media print {
+  .layout-header { display: none; }
+  .layout        { display: block; }
+}

@@ -1,0 +1,34 @@
+.reports-page { display: flex; flex-direction: column; gap: 20px; }
+
+.kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 3px solid var(--kcolor, var(--primary));
+  transition: all var(--duration) var(--ease);
+}
+.kpi-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.kpi-icon {
+  width: 40px; height: 40px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.kpi-value { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+.kpi-label { font-size: 0.65rem; font-weight: 600; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
+.kpi-sub   { font-size: var(--text-xs); color: var(--text-disabled); margin-top: 2px; }
+
+.reports-row { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
+@media (max-width: 1100px) { .reports-row { grid-template-columns: 1fr; } }
+
+/* Health Score in Reports */
+.health-score-circle { position: relative; }
+.health-score-value {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+}
+
+.spend-chart {}
