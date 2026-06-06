@@ -5,34 +5,31 @@ import api from '../../services/api';
 import { formatCurrency, formatDate, getStatusVariant } from '../../utils/aiEngine';
 import {
   FileText, Building2, ShoppingCart, Receipt, TrendingUp, Clock,
-  CheckCircle, AlertTriangle, Zap, ArrowRight, Brain, Activity,
-  Plus, GitBranch, BarChart3, Star, Cpu, RefreshCw
+  CheckCircle, AlertTriangle, ArrowRight, Brain, Activity,
+  Plus, GitBranch, BarChart3, RefreshCw
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import './Dashboard.css';
 
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export default function Dashboard() {
   const { user, hasRole } = useAuth();
-  const [stats, setStats]       = useState(null);
-  const [health, setHealth]     = useState(null);
-  const [aiInsights, setAiInsights] = useState(null);
-  const [spendData, setSpendData]   = useState([]);
-  const [loading, setLoading]   = useState(true);
+  const [stats, setStats] = useState(null);
+  const [health, setHealth] = useState(null);
+  const [spendData, setSpendData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [statsRes, healthRes, spendRes, insightsRes] = await Promise.all([
+      const [statsRes, healthRes, spendRes] = await Promise.all([
         api.get('/analytics/dashboard'),
         api.get('/ai/health-score'),
         api.get('/analytics/spending'),
-        api.get('/ai/insights'),
       ]);
       setStats(statsRes.data.data);
       setHealth(healthRes.data.data);
-      setAiInsights(insightsRes.data.data);
       const monthly = spendRes.data.data.monthlySpending.map(d => ({
         name: MONTHS[(d._id.month - 1)],
         spend: Math.round(d.total),
@@ -40,9 +37,8 @@ export default function Dashboard() {
       }));
       setSpendData(monthly);
     } catch {
-      setStats({ totalRFQs: 5, activeRFQs: 2, pendingApprovals: 2, totalPOs: 5, totalVendors: 6, totalSpend: 5066400, recentPOs: [], recentInvoices: [] });
+      setStats({ totalRFQs: 5, activeRFQs: 2, pendingApprovals: 0, totalPOs: 5, totalVendors: 25, totalSpend: 18877345, recentPOs: [], recentInvoices: [] });
       setHealth({ healthScore: 82, status: 'Healthy', color: 'green', breakdown: { rfqCompletion: 80, invoiceCompletion: 85, poCompletion: 78, vendorPerf: 88 } });
-      setAiInsights({ topVendor: { companyName: 'TechSupply Solutions' }, highRiskVendor: { companyName: 'Swift Logistics Ltd.' }, suggestion: 'TechSupply Solutions has the best on-time delivery record. Consider for all IT procurement.' });
       setSpendData([
         { name: 'Jan', spend: 320000, orders: 2 },
         { name: 'Feb', spend: 450000, orders: 3 },
@@ -65,10 +61,6 @@ export default function Dashboard() {
       <div className="flex justify-between items-center mb-4">
         <div>
           <h1 className="page-title">Dashboard</h1>
-          <p className="page-subtitle">
-            Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'},
-            {' '}{user?.name?.split(' ')[0]}! 👋
-          </p>
         </div>
         <div className="flex gap-3">
           <button className="btn btn-secondary btn-sm" onClick={fetchData}>
@@ -82,7 +74,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ── TOP ROW: Health Score + AI Insights ─────── */}
+      {/* ── TOP ROW: Health Score + 2×2 Stat Cards ─────── */}
       <div className="dashboard-top">
         {/* Procurement Health */}
         <div className="health-card glass">
@@ -99,7 +91,6 @@ export default function Dashboard() {
             </span>
           </div>
 
-          {/* ── Simple circle (no SVG ring glow) ── */}
           <div className="health-score-circle">
             <div className="health-circle-bg">
               <div className="health-circle-fill" style={{
@@ -116,9 +107,9 @@ export default function Dashboard() {
           <div className="health-breakdown">
             {health?.breakdown && Object.entries({
               'RFQ Completion': health.breakdown.rfqCompletion,
-              'Invoice Rate':   health.breakdown.invoiceCompletion,
-              'PO Delivery':    health.breakdown.poCompletion,
-              'Vendor Perf.':   health.breakdown.vendorPerf,
+              'Invoice Rate': health.breakdown.invoiceCompletion,
+              'PO Delivery': health.breakdown.poCompletion,
+              'Vendor Perf.': health.breakdown.vendorPerf,
             }).map(([key, val]) => (
               <div key={key} className="breakdown-item">
                 <span className="breakdown-label">{key}</span>
@@ -131,68 +122,28 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* AI Insights Panel */}
-        <div className="ai-insights glass">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="ai-header-icon"><Cpu size={18} /></div>
-            <div>
-              <h3>AI Procurement Insights</h3>
-              <p className="text-xs text-muted">Smart decision support</p>
-            </div>
-          </div>
-
-          <div className="ai-insight-item">
-            <div className="ai-insight-icon" style={{ background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }}>🏆</div>
-            <div>
-              <span className="ai-insight-label">Recommended Vendor</span>
-              <span className="ai-insight-value">{aiInsights?.topVendor?.companyName || 'No data yet'}</span>
-            </div>
-          </div>
-
-          <div className="ai-insight-item">
-            <div className="ai-insight-icon" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981' }}>📈</div>
-            <div>
-              <span className="ai-insight-label">Procurement Health</span>
-              <span className="ai-insight-value" style={{ color: healthColor }}>{health?.healthScore || '--'}/100 — {health?.status}</span>
-            </div>
-          </div>
-
-          <div className="ai-insight-item">
-            <div className="ai-insight-icon" style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}>⚠️</div>
-            <div>
-              <span className="ai-insight-label">High Risk Vendor</span>
-              <span className="ai-insight-value" style={{ color: '#ef4444' }}>{aiInsights?.highRiskVendor?.companyName || 'None detected'}</span>
-            </div>
-          </div>
-
-          <div className="ai-suggestion">
-            <Zap size={14} />
-            <span>{aiInsights?.suggestion || 'Add vendors and RFQs to get AI suggestions.'}</span>
-          </div>
+        {/* 2×2 Stat Cards Grid */}
+        <div className="stat-cards-grid">
+          {[
+            { label: 'Active RFQs', value: stats?.activeRFQs ?? '--', icon: FileText, color: '#6366f1', link: '/rfqs' },
+            { label: 'Pending Approvals', value: stats?.pendingApprovals ?? '--', icon: Clock, color: '#f59e0b', link: '/approvals', urgent: (stats?.pendingApprovals || 0) > 0 },
+            { label: 'Total Vendors', value: stats?.totalVendors ?? '--', icon: Building2, color: '#10b981', link: '/vendors' },
+            { label: 'Total Spend', value: formatCurrency(stats?.totalSpend || 0), icon: TrendingUp, color: '#8b5cf6', link: '/reports' },
+          ].map((s, i) => (
+            <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
+              <div className={`stat-card stat-card-tall ${s.urgent ? 'urgent' : ''}`}>
+                <div className="stat-icon" style={{ background: `${s.color}20`, color: s.color }}>
+                  <s.icon size={24} />
+                </div>
+                <div>
+                  <div className="stat-value" style={{ color: s.color }}>{s.value}</div>
+                  <div className="stat-label">{s.label}</div>
+                </div>
+                {s.urgent && <span className="urgent-badge">Urgent</span>}
+              </div>
+            </Link>
+          ))}
         </div>
-      </div>
-
-      {/* ── STAT CARDS ───────────────────────────────────────────── */}
-      <div className="grid-4 mb-4">
-        {[
-          { label: 'Active RFQs',       value: stats?.activeRFQs ?? '--',         icon: FileText,   color: '#6366f1', link: '/rfqs' },
-          { label: 'Pending Approvals', value: stats?.pendingApprovals ?? '--',    icon: Clock,      color: '#f59e0b', link: '/approvals', urgent: (stats?.pendingApprovals || 0) > 0 },
-          { label: 'Total Vendors',     value: stats?.totalVendors ?? '--',        icon: Building2,  color: '#10b981', link: '/vendors' },
-          { label: 'Total Spend',       value: formatCurrency(stats?.totalSpend || 0), icon: TrendingUp, color: '#8b5cf6', link: '/reports' },
-        ].map((s, i) => (
-          <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
-            <div className={`stat-card ${s.urgent ? 'urgent' : ''}`}>
-              <div className="stat-icon" style={{ background: `${s.color}20`, color: s.color }}>
-                <s.icon size={22} />
-              </div>
-              <div>
-                <div className="stat-value" style={{ color: s.color }}>{s.value}</div>
-                <div className="stat-label">{s.label}</div>
-              </div>
-              {s.urgent && <span className="urgent-badge">Urgent</span>}
-            </div>
-          </Link>
-        ))}
       </div>
 
       {/* ── CHART + QUICK ACTIONS ───────────────────────────────── */}
@@ -211,14 +162,14 @@ export default function Dashboard() {
               <AreaChart data={spendData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="spendGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor="#6366f1" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0}   />
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="name" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 10 }} axisLine={false} tickLine={false}
-                  tickFormatter={v => v >= 100000 ? `₹${(v/100000).toFixed(1)}L` : `₹${v}`} />
+                  tickFormatter={v => v >= 100000 ? `₹${(v / 100000).toFixed(1)}L` : `₹${v}`} />
                 <Tooltip
                   contentStyle={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text-primary)' }}
                   formatter={v => [formatCurrency(v), 'Spend']}
