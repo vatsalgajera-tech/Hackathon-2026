@@ -11,7 +11,7 @@
 <div align="center">
 
 <p>
-  <img src="https://img.shields.io/badge/Odoo%20x%20KSV-Hackathon%202026-714B67?style=for-the-badge" />
+  <!-- <img src="https://img.shields.io/badge/Odoo%20x%20KSV-Hackathon%202026-714B67?style=for-the-badge" /> -->
   <img src="https://img.shields.io/badge/MERN-Stack-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
   <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
@@ -44,7 +44,7 @@ These challenges lead to increased costs, delayed procurement, and reduced opera
 
 ---
 
-## 💡 Our Solution
+## 💡 My Solution
 
 VendorBridge AI provides a centralized ERP platform that digitizes the entire procurement lifecycle.
 
