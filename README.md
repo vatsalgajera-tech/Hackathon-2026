@@ -163,53 +163,25 @@ The system automatically recommends the most suitable vendor during quotation ev
 
 ---
 
-# 🔄 End-to-End Workflow
+## ⚡ Workflow Overview
 
-```mermaid
-flowchart TD
+🔹 Create RFQ
 
-A[Create RFQ]
---> B[Assign Vendors]
+→ 🔹 Invite Vendors
 
-B --> C[Vendor Quotation Submission]
+→ 🔹 Receive Quotations
 
-C --> D[Quotation Comparison]
+→ 🔹 Compare Quotations
 
-D --> E[Approval Workflow]
+→ 🔹 Approval Process
 
-E --> F[Purchase Order Generation]
+→ 🔹 Generate Purchase Order
 
-F --> G[Invoice Generation]
+→ 🔹 Generate Invoice
 
-G --> H[PDF Export & Email]
+→ 🔹 Export PDF / Send Email
 
-H --> I[Analytics & Activity Tracking]
-```
-
----
-
-# 🏗️ System Architecture
-
-```text
-┌─────────────────────────┐
-│     React Frontend      │
-└──────────┬──────────────┘
-           │
-           ▼
-┌─────────────────────────┐
-│      Express APIs       │
-└──────────┬──────────────┘
-           │
-           ▼
-┌─────────────────────────┐
-│ Business Logic Layer    │
-└──────────┬──────────────┘
-           │
-           ▼
-┌─────────────────────────┐
-│     MongoDB Atlas       │
-└─────────────────────────┘
-```
+→ 🔹 Monitor Analytics
 
 ---
 
