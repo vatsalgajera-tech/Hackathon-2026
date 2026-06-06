@@ -270,4 +270,6 @@ The `utils/aiEngine.js` module powers intelligent procurement decisions:
 
 ---
 
-*Built for Hackathon 2026 — VendorBridge AI Team*
+## Author
+
+### Vatsal Gajera
