@@ -2,7 +2,7 @@
 
 <div align="center">
 
-### Smart Procurement & Vendor Management ERP
+## Smart Procurement & Vendor Management ERP
 
 *Transforming procurement operations through intelligent vendor management, automated workflows, and real-time analytics.*
 
